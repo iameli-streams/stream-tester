@@ -130,7 +130,7 @@ func GetNumberOfSegments(fileName string, streamDuration time.Duration) int {
 func readAll(nc net.Conn) {
 	var n int
 	var err error
-	eb := make([]byte, 1024)
+	eb := make([]byte, PlaylistSize)
 	for {
 		nc.SetReadDeadline(time.Now().Add(1 * time.Millisecond))
 		n, err = nc.Read(eb)

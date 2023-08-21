@@ -38,7 +38,7 @@ type (
 
 func newSegmentsMatcher() *segmentsMatcher {
 	return &segmentsMatcher{
-		sentFrames: make([]sentFrameInfo, 0, 1024),
+		sentFrames: make([]sentFrameInfo, 0, PlaylistSize),
 		mu:         &sync.Mutex{},
 	}
 }

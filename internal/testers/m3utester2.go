@@ -250,7 +250,7 @@ func newM3uMediaStream(ctx context.Context, cancel context.CancelFunc, name, res
 			os.Mkdir(ms.saveDirName, 0755)
 		}
 		glog.Infof("Save dir name: '%s', main playlist save name %s", ms.saveDirName, ms.savePlayListName)
-		mpl, err := m3u8.NewMediaPlaylist(0, 1024)
+		mpl, err := m3u8.NewMediaPlaylist(0, PlaylistSize)
 		if err != nil {
 			return nil, err
 		}

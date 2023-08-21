@@ -26,6 +26,7 @@ import (
 )
 
 const simultaneousDownloads = 4
+const PlaylistSize = 4096
 
 type downloadStats struct {
 	success    int
@@ -119,7 +120,7 @@ func newMediaDownloader(ctx context.Context, parentName, name, u, resolution str
 	}
 	md.ctx, md.cancel = context.WithCancel(ctx)
 	if save {
-		mpl, err := m3u8.NewMediaPlaylist(0, 1024)
+		mpl, err := m3u8.NewMediaPlaylist(0, PlaylistSize)
 		mpl.MediaType = m3u8.VOD
 		mpl.Live = false
 		if err != nil {
@@ -401,7 +402,7 @@ func (md *mediaDownloader) IsFiniteDownloadsFinished() bool {
 }
 
 func (md *mediaDownloader) workerLoop(resultsChan chan downloadResult) {
-	// seen := newStringRing(128 * 1024)
+	// seen := newStringRing(128 * PlaylistSize)
 	// resultsCahn := make(chan downloadResult, 32) // http status or excpetion
 	for {
 		select {
@@ -461,7 +462,7 @@ func (md *mediaDownloader) manifestDownloadLoop() {
 	surl := md.u.String()
 	gotManifest := false
 	var mySeqNo uint64
-	seen := newStringRing(128 * 1024)
+	seen := newStringRing(128 * PlaylistSize)
 	for {
 		select {
 		case <-md.ctx.Done():
